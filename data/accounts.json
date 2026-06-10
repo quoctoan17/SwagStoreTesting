@@ -1,3 +1,11 @@
 [
-    { "role": "staff" }
+  {
+    "id": 1717830000000,
+    "name": "Admin Staff",
+    "email": "admin@swagstore.com",
+    "address": "123 Admin Street",
+    "passwordHash": "$2a$10$qKb0Pf2LPr0xdIZmZ2B3QOLhfG1O6Q2L1mK4.8sL9pZ3q0w1e5N4C",
+    "role": "staff",
+    "createdAt": "2026-06-10T00:00:00.000Z"
+  }
 ]

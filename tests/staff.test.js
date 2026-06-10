@@ -93,7 +93,7 @@ describe('Product CRUD (staff)', () => {
 // ─────────────────────────────────────────────────────────────
 
 describe('Staff middleware - requireStaff', () => {
-  const { requireStaff } = require('../middleware/requireStaff');
+  const { requireStaff } = require('../middleware/requiredStaff');
 
   test('redirects to login if not logged in', () => {
     const req = { session: {} };

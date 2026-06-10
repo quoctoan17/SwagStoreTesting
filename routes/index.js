@@ -4,7 +4,7 @@ const router     = express.Router();
 const shopCtrl   = require('../controllers/shopController');
 const authCtrl   = require('../controllers/authController');
 const staffCtrl  = require('../controllers/staffController');
-const { requireStaff } = require('../middleware/requireStaff');
+const { requireStaff } = require('../middleware/requiredStaff');
 
 // ── Shop ──────────────────────────────────────────────────────
 router.get('/',             shopCtrl.showShop);

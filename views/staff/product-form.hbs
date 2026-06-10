@@ -44,7 +44,7 @@
           <select name="category" class="form-input">
             <option value="">— Select —</option>
             {{#each categories}}
-              <option value="{{this.slug}}" {{#eq this.slug ../product.category}}selected{{/eq}}>{{this.name}}</option>
+              <option value="{{this}}" {{#eq this ../product.category}}selected{{/eq}}>{{this}}</option>
             {{/each}}
           </select>
         </div>
@@ -53,7 +53,7 @@
           <select name="type" class="form-input">
             <option value="">— Select —</option>
             {{#each types}}
-              <option value="{{this.slug}}" {{#eq this.slug ../product.type}}selected{{/eq}}>{{this.name}}</option>
+              <option value="{{this}}" {{#eq this ../product.type}}selected{{/eq}}>{{this}}</option>
             {{/each}}
           </select>
         </div>

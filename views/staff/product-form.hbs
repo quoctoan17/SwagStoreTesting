@@ -1,0 +1,103 @@
+<div class="page-container" style="max-width:720px;">
+  <div class="page-header">
+    <a href="/staff/products" class="back-link">← Products</a>
+    <h1 class="page-title">{{#if isNew}}Add Product{{else}}Edit Product{{/if}}</h1>
+  </div>
+
+  {{#if error}}
+    <div class="alert alert-error" style="margin-bottom:24px;">⚠️ {{error}}</div>
+  {{/if}}
+
+  <form action="{{#if isNew}}/staff/products{{else}}/staff/products/{{product.id}}/edit{{/if}}" method="POST">
+    <div class="form-section">
+      <div class="form-section-title">Basic Info</div>
+
+      <div class="form-group">
+        <label class="form-label">Product Name *</label>
+        <input type="text" name="name" class="form-input"
+          value="{{#if isNew}}{{form.name}}{{else}}{{product.name}}{{/if}}"
+          placeholder="e.g. Classic Hoodie" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Price (USD) *</label>
+          <input type="number" name="price" class="form-input" step="0.01" min="0"
+            value="{{#if isNew}}{{form.price}}{{else}}{{product.price}}{{/if}}"
+            placeholder="0.00" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Badge</label>
+          <select name="badge" class="form-input">
+            <option value="">— None —</option>
+            <option value="Bestseller" {{#eq product.badge "Bestseller"}}selected{{/eq}}>Bestseller</option>
+            <option value="New"        {{#eq product.badge "New"}}selected{{/eq}}>New</option>
+            <option value="Sale"       {{#eq product.badge "Sale"}}selected{{/eq}}>Sale</option>
+            <option value="Limited"    {{#eq product.badge "Limited"}}selected{{/eq}}>Limited</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select name="category" class="form-input">
+            <option value="">— Select —</option>
+            {{#each categories}}
+              <option value="{{this.slug}}" {{#eq this.slug ../product.category}}selected{{/eq}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select name="type" class="form-input">
+            <option value="">— Select —</option>
+            {{#each types}}
+              <option value="{{this.slug}}" {{#eq this.slug ../product.type}}selected{{/eq}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Media & Description</div>
+
+      <div class="form-group">
+        <label class="form-label">Image URL</label>
+        <input type="text" name="image" id="img-url" class="form-input"
+          value="{{#if isNew}}{{form.image}}{{else}}{{product.image}}{{/if}}"
+          placeholder="https://...">
+      </div>
+
+      <div id="img-preview" style="margin-bottom:16px;{{#unless product.image}}display:none;{{/unless}}">
+        <img id="preview-img" src="{{product.image}}" alt="preview"
+          style="width:120px;height:90px;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--border);">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea name="description" class="form-input form-textarea"
+          placeholder="Short product description...">{{#if isNew}}{{form.description}}{{else}}{{product.description}}{{/if}}</textarea>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:center;">
+      <button type="submit" class="btn-primary" style="margin-top:0;">
+        {{#if isNew}}➕ Add Product{{else}}💾 Save Changes{{/if}}
+      </button>
+      <a href="/staff/products" class="btn-ghost" style="padding:14px 20px;text-decoration:none;display:inline-flex;align-items:center;">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  const imgInput   = document.getElementById('img-url');
+  const preview    = document.getElementById('img-preview');
+  const previewImg = document.getElementById('preview-img');
+  imgInput.addEventListener('input', () => {
+    const val = imgInput.value.trim();
+    if (val) { previewImg.src = val; preview.style.display = 'block'; }
+    else { preview.style.display = 'none'; }
+  });
+</script>

@@ -1,0 +1,67 @@
+<div class="page-container">
+  <div class="page-header">
+    <a href="/staff" class="back-link">← Dashboard</a>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <h1 class="page-title">All Orders</h1>
+      <a href="/staff/orders/new" class="btn-primary" style="margin-top:0;background:var(--success);">📦 New Order</a>
+    </div>
+  </div>
+
+  {{#if success}}
+    <div class="alert alert-success" style="margin-bottom:24px;">✅ {{success}}</div>
+  {{/if}}
+
+  {{#if orders.length}}
+    <div class="order-list">
+      {{#each orders}}
+      <div class="order-card">
+        <div class="order-card-header">
+          <div>
+            <div class="order-tag">{{this.id}}</div>
+            <div class="order-date">{{this.placedAt}}</div>
+            {{#if this.placedBy}}
+              <div style="font-size:12px;color:var(--accent2);margin-top:4px;">📋 Placed by staff</div>
+            {{/if}}
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+            <span class="order-status-pill">{{this.status}}</span>
+            <span style="font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--accent);">${{this.total}}</span>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div class="summary-row">
+            <div class="summary-label">Customer</div>
+            <div class="summary-text">{{this.name}}</div>
+            <div class="summary-detail">{{this.email}}</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Shipping Address</div>
+            <div class="summary-detail">{{this.address}}</div>
+          </div>
+        </div>
+
+        <div class="order-card-items">
+          <div class="items-title">Items ({{this.items.length}})</div>
+          {{#each this.items}}
+          <div class="order-item-row">
+            <div class="item-meta">
+              <div class="item-name">{{this.product.name}}</div>
+              <div class="item-subtext">Qty: {{this.qty}} × ${{this.product.price}}</div>
+            </div>
+            <div class="item-price">${{this.subtotal}}</div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="empty-state">
+      <div class="empty-icon">🧾</div>
+      <div class="empty-title">No orders yet</div>
+      <div class="empty-sub">Create an order for a customer to get started.</div>
+      <a href="/staff/orders/new" class="btn-primary" style="margin-top:0;">📦 Create Order</a>
+    </div>
+  {{/if}}
+</div>

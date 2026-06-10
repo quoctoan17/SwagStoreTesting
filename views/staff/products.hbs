@@ -1,0 +1,91 @@
+<div class="page-container">
+  <div class="page-header">
+    <a href="/staff" class="back-link">← Dashboard</a>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <h1 class="page-title">Products</h1>
+      <a href="/staff/products/new" class="btn-primary" style="margin-top:0;">➕ Add Product</a>
+    </div>
+  </div>
+
+  {{#if success}}
+    <div class="alert alert-success" style="margin-bottom:24px;">
+      {{#eq success "added"}}✅ Product added successfully.{{/eq}}
+      {{#eq success "updated"}}✅ Product updated successfully.{{/eq}}
+      {{#eq success "deleted"}}🗑️ Product deleted successfully.{{/eq}}
+    </div>
+  {{/if}}
+
+  <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border);">
+          <th style="padding:12px 16px;text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Product</th>
+          <th style="padding:12px 16px;text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Category</th>
+          <th style="padding:12px 16px;text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Type</th>
+          <th style="padding:12px 16px;text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Price</th>
+          <th style="padding:12px 16px;text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Badge</th>
+          <th style="padding:12px 16px;text-align:right;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+        <tr style="border-bottom:1px solid var(--border);transition:background .15s;" onmouseover="this.style.background='var(--bg2)'" onmouseout="this.style.background='transparent'">
+          <td style="padding:16px;">
+            <div style="display:flex;align-items:center;gap:14px;">
+              {{#if this.image}}
+                <img src="{{this.image}}" alt="{{this.name}}"
+                  style="width:48px;height:48px;object-fit:cover;border-radius:var(--radius-sm);background:var(--bg3);">
+              {{else}}
+                <div style="width:48px;height:48px;background:var(--bg3);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:20px;">📦</div>
+              {{/if}}
+              <div>
+                <div style="font-family:'Fraunces',serif;font-weight:600;font-size:15px;">{{this.name}}</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px;">ID: {{this.id}}</div>
+              </div>
+            </div>
+          </td>
+          <td style="padding:16px;color:var(--muted);font-size:14px;">{{this.category}}</td>
+          <td style="padding:16px;color:var(--muted);font-size:14px;">{{this.type}}</td>
+          <td style="padding:16px;">
+            <span style="font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--accent);">${{this.price}}</span>
+          </td>
+          <td style="padding:16px;">
+            {{#if this.badge}}
+              <span class="badge badge-{{badgeClass this.badge}}">{{this.badge}}</span>
+            {{else}}
+              <span style="color:var(--muted);">—</span>
+            {{/if}}
+          </td>
+          <td style="padding:16px;text-align:right;">
+            <div style="display:flex;gap:8px;justify-content:flex-end;">
+              <a href="/staff/products/{{this.id}}/edit"
+                style="padding:7px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;color:var(--text);text-decoration:none;transition:border-color .15s;"
+                onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+                ✏️ Edit
+              </a>
+              <form action="/staff/products/{{this.id}}/delete" method="POST" style="display:inline;"
+                    onsubmit="return confirm('Delete {{this.name}}?')">
+                <button type="submit"
+                  style="padding:7px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:none;color:var(--muted);cursor:pointer;transition:all .15s;"
+                  onmouseover="this.style.borderColor='var(--danger)';this.style.color='var(--danger)'"
+                  onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+                  🗑️ Delete
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {{else}}
+        <tr>
+          <td colspan="6" style="padding:60px;text-align:center;">
+            <div class="empty-icon">📦</div>
+            <div style="font-family:'Fraunces',serif;font-size:22px;margin-bottom:8px;">No products yet</div>
+            <div style="color:var(--muted);margin-bottom:20px;">Add your first product to get started.</div>
+            <a href="/staff/products/new" class="btn-primary" style="margin-top:0;">➕ Add Product</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
